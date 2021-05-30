@@ -141,7 +141,7 @@ func main () {
 	// print out the duplicate paths, or delete them, now that we have preserved at least one file in each files list.
 	for sum, dupeFiles := range checksums {
 		if len(dupeFiles) > 0 {
-			fmt.Println(sum, " -> ", fileCounts[sum])
+			fmt.Println(sum, " -> total: ", fileCounts[sum], " dupes: ", len(dupeFiles))
 			for d := range dupeFiles {
 				dupeSizeTotal += fileSizes[d]
 
