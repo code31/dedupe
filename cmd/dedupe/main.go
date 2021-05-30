@@ -31,7 +31,7 @@ func checksum(path string) (cksum string, err error) {
 func main () {
 	entryDir := flag.String("directory", "", "the absolute path of the directory containing the files to de-duplicate")
 	extensions := flag.String("extensions", "", "comma separated list of file extensions to filter by")
-	preferred := flag.String("preferred", "", "the preferred extension to keep in a set of duplicates")
+	preferred := flag.String("preferred", "", "the preferred extension of the file to keep in a set of duplicates")
 	clean := flag.Bool("clean", false, "delete duplicate files")
 	flag.Parse()
 
@@ -99,7 +99,8 @@ func main () {
 		log.Fatalln(err)
 	}
 
-	// remove the file path with the preferred extension. this will ensure the desired original is not deleted.
+	// remove the file path with the preferred extension. this will ensure the desired original is not marked
+	// duplicate for deletion.
 	if *preferred != "" {
 		for _, files := range checksums {
 			var found bool
@@ -137,7 +138,7 @@ func main () {
 	}
 
 	var dupeSizeTotal int64
-	// print out the duplicate paths or delete now that we have preserved at least one file in each files list.
+	// print out the duplicate paths, or delete them, now that we have preserved at least one file in each files list.
 	for sum, dupeFiles := range checksums {
 		if len(dupeFiles) > 0 {
 			fmt.Println(sum, " -> ", fileCounts[sum])
