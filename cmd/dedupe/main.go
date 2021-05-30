@@ -10,6 +10,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"time"
 )
 
 func checksum(path string) (cksum string, err error) {
@@ -40,6 +41,12 @@ func main () {
 
 	if *extensions == "" {
 		log.Fatalln("a comma separated list of extensions are required")
+	}
+
+	if *clean {
+		fmt.Println("WARNING: Files will begin deletion in ten seconds. CTRL+C to stop.")
+		time.Sleep(10 * time.Second)
+		fmt.Println("Starting...")
 	}
 
 	// get extensions
