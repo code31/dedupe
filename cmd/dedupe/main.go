@@ -107,8 +107,8 @@ func main () {
 			// if we find a file with the extension we want, remove it so it doesn't get marked as a duplicate later
 			for d := range files {
 				if filepath.Ext(d) == "." + *preferred {
-					//original := "original: " + d
-					//files[original] = true
+					original := "original: " + d
+					files[original] = true
 					delete(files, d)
 					found = true
 					break
@@ -118,8 +118,8 @@ func main () {
 			// if we don't have a file with our preferred extension, remove the first file in the map so it isn't deleted
 			if !found {
 				for d := range files {
-					//original := "original: " + d
-					//files[original] = true
+					original := "original: " + d
+					files[original] = true
 					delete(files, d)
 					break
 				}
@@ -129,8 +129,8 @@ func main () {
 		// otherwise, delete the first file in the list.
 		for _, files := range checksums {
 			for d := range files {
-				//original := "original: " + d
-				//files[original] = true
+				original := "original: " + d
+				files[original] = true
 				delete(files, d)
 				break
 			}
@@ -141,7 +141,7 @@ func main () {
 	// print out the duplicate paths, or delete them, now that we have preserved at least one file in each files list.
 	for sum, dupeFiles := range checksums {
 		if len(dupeFiles) > 0 {
-			fmt.Println(sum, " -> total: ", fileCounts[sum], " dupes: ", len(dupeFiles))
+			fmt.Println("\n", sum, " -> total: ", fileCounts[sum], " dupes: ", len(dupeFiles))
 			for d := range dupeFiles {
 				dupeSizeTotal += fileSizes[d]
 
